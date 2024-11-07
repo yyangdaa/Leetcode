@@ -1,0 +1,22 @@
+from typing import List
+
+class Solution:
+    def canSortArray(self, nums: List[int]) -> bool:
+        previous_max_in_segment = 0
+        current_max_in_segment = nums[0]  
+        current_bit_count = current_max_in_segment.bit_count() 
+        
+        for num in nums:
+            num_bit_count = num.bit_count()  
+
+            if current_bit_count == num_bit_count:
+                current_max_in_segment = max(current_max_in_segment, num)
+            else:
+                previous_max_in_segment = current_max_in_segment
+                current_max_in_segment = num
+                current_bit_count = num_bit_count
+
+            if num < previous_max_in_segment:
+                return False
+
+        return nums[-1] >= previous_max_in_segment
